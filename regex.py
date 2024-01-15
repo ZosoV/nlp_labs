@@ -36,3 +36,14 @@ corpus = "Hola soyab b Oscarb Oscarb 788851 perrob perrob TT45$%$^ abe67b "
 
 matches = re.findall(pattern, corpus)
 print(matches)
+
+# 2. All strings that start at the beginning of the line with an integer and that end
+# at the end of the line with a word. ou may use \b to match the empty string,
+# but only when it is not at the beginning or end of a word.
+
+pattern = r"[0-9]+\b.*\b[A-Za-z]+\b"
+# corpus = "I know 30 great pictures which show 2 fancy cakes"
+corpus = "Hola soyab b Oscarb Oscarb 788851 perrob perrob TT45$%$^ abe67b "
+
+matches = re.findall(pattern, corpus)
+print(matches)
