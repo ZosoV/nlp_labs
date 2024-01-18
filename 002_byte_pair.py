@@ -63,29 +63,26 @@ def byte_pair_encoding(corpus, k):
                 max_freq = freq
                 max_pair = pair
         
-        return max_pair, word_idx
+        return max_pair
 
     # 4. replace_ocurrances
     # NOTE: checked a better way to do it
-    def replace_ocurrances(best_pair):
+    def replace_ocurrances(best_pair, words):
 
         for word_idx, word in enumerate(words):
             tmp_word = []
-            changed = False
             i = 0
             while i < len(word-1):
                 charL, charR = word[i], word[i+1]
                 if (charL, charR) == best_pair:
                     tmp_word.append(charL + charR)
-                    changed = True
                     i += 1
                 else:
                     tmp_word.append(charL)
                 
                 i += 1
 
-            if changed:
-                tmp_word.append(charR)
+            tmp_word.append(charR)
             words[word_idx] = tmp_word
         
                 
@@ -111,7 +108,33 @@ times you want to you want it to be replaced. The default value is 0. It is opti
 flags: The regex flags are optional.
 '''
 
-print(byte_pair_encoding(corpus, k = 1))
+def replace_ocurrances(best_pair, words):
+
+    for word_idx, word in enumerate(words):
+        tmp_word = []
+        i = 0
+        while i < len(word) - 1:
+            charL, charR = word[i], word[i+1]
+            if (charL, charR) == best_pair:
+                tmp_word.append(charL + charR)
+                i += 1
+            else:
+                tmp_word.append(charL)
+            
+            i += 1
+
+        # TODO: change with a function to don't consider the underscore
+
+        tmp_word.append(charR)
+        words[word_idx] = tmp_word
+
+    return words
+        
+
+# print(byte_pair_encoding(corpus, k = 1))
+words = [["l",'o',"w", "_"], ["l", "o", "w", "e", "s", "t", "_"], ["n", "e", "w", "er", "_"], ["w", "i", "d", "er", "_"],["n","e","w","_"]]
+print(words)
+print(replace_ocurrances( ("er","_"), words))
 
 # print(re.sub("([A-Z])", lambda x: x.group(1).lower(), corpus))
 
